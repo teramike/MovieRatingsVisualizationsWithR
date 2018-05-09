@@ -38,6 +38,27 @@ movies %>% count(genre) %>% arrange(desc(n)) %>% head(n=5)
 # Most popular genres
 movies3MainGenres <- movies %>% filter(genre=="Drama" | genre=="Comedy" | genre=="Action & Adventure")
 
+movies3MainGenres$critics_rating<- gsub(movies3MainGenres$critics_rating,pattern = "Certified Fresh",replacement="Very Good")
+movies3MainGenres$critics_rating <- gsub(movies3MainGenres$critics_rating,pattern = "Fresh",replacement="Good")
+movies3MainGenres$critics_rating <- gsub(movies3MainGenres$critics_rating,pattern = "Rotten",replacement="Poor")
+movies3MainGenres$critics_rating <- factor(movies3MainGenres$critics_rating,levels=c("Very Good","Good","Poor"),ordered=T)
+
+
+# Plot Comparing scores of two sites, Genres, Number of Imdv votes and Review Quality.
+ggplot(data = movies3MainGenres) + 
+  geom_jitter(mapping = aes(x=audience_score, y=imdb_rating, color = genre,  size = imdb_num_votes, shape = critics_rating),alpha = 0.7)+
+  scale_x_continuous()+
+  scale_y_continuous()+
+  theme_light() +
+  theme(legend.position = "right", legend.key = element_blank(),
+        axis.text = element_text(size=10),
+        axis.title = element_text(size=12)) +
+  labs(x = "Rotten tomatoes - Score", y = "IMDB-Score", title="IMDB vs Rotten Tomatoes Rating", color="Genres", shape = "Review Quality (Rotten Tomatoes)", size  = "Number of imdb votes")
+
+
+# Plot Comparing time vs avg_score, Genres, Number of Imdv votes and Review Quality.
+movies3MainGenres2 <- 
+  
 ggplot(data = movies3MainGenres) + 
   geom_jitter(mapping = aes(x=critics_score, y=imdb_rating, color = genre,  size = imdb_num_votes, shape = critics_rating),alpha = 0.7)+
   scale_x_continuous()+
@@ -46,7 +67,8 @@ ggplot(data = movies3MainGenres) +
   theme(legend.position = "right", legend.key = element_blank(),
         axis.text = element_text(size=10),
         axis.title = element_text(size=12)) +
-  labs(x = "Critics score, Rotten tomatoes", y = "Imdb-score", title="Imdb vs Rotten tomatoes", color="Genres", shape = "Critics rating", size  = "Number of imdb votes")
+  labs(x = "Critics score, Rotten tomatoes", y = "Imdb-score", title="Imdb vs Rotten tomatoes", color="Genres", shape = "Review Quality (Rotten Tomatoes)", size  = "Number of imdb votes")
+
 
 # Dates in X axis, Avg Audience & Critic score & IMDB (Normalize) in Y axis, 4 Main Genres hue, 
 
