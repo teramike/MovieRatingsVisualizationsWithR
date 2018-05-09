@@ -61,7 +61,7 @@ parallelPlot <- movies3MainGenres %>%
             list(label='IMDB Num Votes',range=c(min(movies3MainGenres$imdb_num_votes),max(movies3MainGenres$imdb_num_votes)),
                  values= ~imdb_num_votes),
             list(label='Review Quality',tickvals = c(1,2,3),ticktext = c("Poor", "Average", "Very Good"),
-                               values= ~num_quality)
+                              values= ~num_quality)
      )
   ) 
 
