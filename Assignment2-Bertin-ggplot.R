@@ -28,7 +28,26 @@ ggsave("assignment2-ggplot-movies.png", width = 8, height = 8)
 
 # Plot 1
 
-moviesQuantitative <- movies %>% mutate(any_actor_win = ifelse(best_actor_win=="no",0,1))%>% select(thtr_rel_year,thtr_rel_month,imdb_rating,critics_score)
-M <- cor(moviesQuantitative)
-corrplot(cor(moviesQuantitative),method="circle",order="AOE")
+# moviesQuantitative <- movies %>% mutate(best_actor_win = ifelse((best_actor_win=="no"),0,1),best_actress_win = ifelse((best_actress_win=="no"),0,1))%>% select(imdb_rating,critics_score,best_actress_win,best_actor_win)
+# M <- cor(moviesQuantitative)
+# # corrplot.mixed(cor(moviesQuantitative),method="circle",order="AOE")
+# corrplot.mixed(cor(moviesQuantitative),order="AOE")
+
+movies %>% count(genre) %>% arrange(desc(n)) %>% head(n=5)
+
+# Most popular genres
+movies3MainGenres <- movies %>% filter(genre=="Drama" | genre=="Comedy" | genre=="Action & Adventure")
+
+ggplot(data = movies3MainGenres) + 
+  geom_jitter(mapping = aes(x=critics_score, y=imdb_rating, color = genre,  size = imdb_num_votes, shape = critics_rating),alpha = 0.7)+
+  scale_x_continuous()+
+  scale_y_continuous()+
+  theme_light() +
+  theme(legend.position = "right", legend.key = element_blank(),
+        axis.text = element_text(size=10),
+        axis.title = element_text(size=12)) +
+  labs(x = "Critics score, Rotten tomatoes", y = "Imdb-score", title="Imdb vs Rotten tomatoes", color="Genres", shape = "Critics rating", size  = "Number of imdb votes")
+
+# Dates in X axis, Avg Audience & Critic score & IMDB (Normalize) in Y axis, 4 Main Genres hue, 
+
 
