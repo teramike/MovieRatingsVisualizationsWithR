@@ -2,6 +2,7 @@ library(ggplot2)
 library(ggthemes)
 library(data.table)
 library(dplyr)
+library(plotly)
 
 #########################
 # Read movie data
@@ -60,10 +61,10 @@ parallelPlot <- movies3MainGenres %>%
                  label = 'Rotten Tomatoes rating', values = ~audience_score),
             list(label='IMDB Num Votes',range=c(min(movies3MainGenres$imdb_num_votes),max(movies3MainGenres$imdb_num_votes)),
                  values= ~imdb_num_votes),
-            list(label='Review Quality',tickvals = c(1,2,3),ticktext = c("Poor", "Average", "Very Good"),
-                              values= ~num_quality)
+            list(label='R.Quality',tickvals = c(1,2,3),ticktext = c("Poor", "Average", "Very Good"),
+                 values= ~num_quality)
      )
-  ) 
+  ) %>% layout(title="Parallel Dimension Analysis")
 
 parallelPlot
 
