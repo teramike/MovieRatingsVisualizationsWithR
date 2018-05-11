@@ -41,7 +41,7 @@ ggplot(data = movies3MainGenres) +
         axis.title = element_text(size=12)) +
   labs(x = "Rotten Tomatoes - Rating", y = "IMDB-Rating", title="IMDB vs Rotten Tomatoes Rating", color="Genres", shape = "Quality of Reviews (Rotten Tomatoes)", size  = "Number of IMDB votes")
 
-ggsave("plot1.png", width = 12, height = 8)
+#ggsave("plot1.png", width = 12, height = 8)
 
 
 # New Plot using plotly's library
